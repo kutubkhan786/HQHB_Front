@@ -12,6 +12,8 @@ function Dashboard() {
     const AddUser = () => navigate("/register");
     const LoginUser = () => navigate("/");
 
+
+
     useEffect(() => {
         if (token) {
             const decoded = jwtDecode(token);
@@ -40,6 +42,31 @@ function Dashboard() {
 
     const handleEdit = (id) => {
         navigate(`/edit/${id}`);
+    };
+
+    const handleDelete = async (id) => {
+        if (!window.confirm("Are you sure you want to delete this user?")) return;
+
+        try {
+            const response = await fetch(`${baseURL}/api/auth/user/${id}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                }
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                alert("User deleted successfully!");
+                fetchUsers(); // refresh table
+            } else {
+                alert(data.message || "Error deleting user");
+            }
+        } catch (error) {
+            console.error("Delete error:", error);
+        }
     };
 
     return (
@@ -83,7 +110,11 @@ function Dashboard() {
                                     <button style={styles.editBtn} onClick={() => handleEdit(user._id)}>
                                         ✏️ Edit
                                     </button>
+                                    <button style={styles.deleteBtn} onClick={() => handleDelete(user._id)}>
+                                        🗑️ Delete
+                                    </button>
                                 </td>
+
                             </tr>
                         ))}
                     </tbody>
@@ -141,6 +172,18 @@ const styles = {
         cursor: "pointer",
         fontSize: "16px",
         boxShadow: "0 3px 8px rgba(0,0,0,0.2)",
+        transition: "0.2s",
+    },
+    deleteBtn: {
+        padding: "6px 12px",
+        backgroundColor: "#dc3545",
+        color: "#fff",
+        border: "none",
+        borderRadius: "4px",
+        cursor: "pointer",
+        fontSize: "14px",
+        marginLeft: "10px",
+        boxShadow: "0 2px 6px rgba(0,0,0,0.2)",
         transition: "0.2s",
     },
     tableContainer: {
