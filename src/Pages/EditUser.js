@@ -8,6 +8,7 @@ function EditUser() {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const baseURL = process.env.REACT_APP_API_URL;
 
     // Fetch specific user data
     useEffect(() => {
@@ -16,7 +17,7 @@ function EditUser() {
 
     const fetchUserData = async () => {
         try {
-            const response = await fetch(`http://localhost:5000/api/auth/user/${id}`, {
+            const response = await fetch(`${baseURL}/api/auth/user/${id}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -38,7 +39,7 @@ function EditUser() {
         e.preventDefault();
 
         try {
-            const response = await fetch(`http://localhost:5000/api/auth/user/${id}`, {
+            const response = await fetch(`${baseURL}/api/auth/user/${id}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",

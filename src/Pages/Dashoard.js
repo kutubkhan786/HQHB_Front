@@ -7,6 +7,7 @@ function Dashboard() {
     const [users, setUsers] = useState([]);
     const token = localStorage.getItem("token");
     const navigate = useNavigate();
+    const baseURL = process.env.REACT_APP_API_URL;
 
     const AddUser = () => navigate("/register");
     const LoginUser = () => navigate("/");
@@ -21,7 +22,7 @@ function Dashboard() {
 
     const fetchUsers = async () => {
         try {
-            const response = await fetch("http://localhost:5000/api/auth/users", {
+            const response = await fetch(`${baseURL}/api/auth/users`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
