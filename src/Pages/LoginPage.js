@@ -31,6 +31,15 @@ function LoginPage() {
             color: "white",
             border: "none",
         },
+        button2: {
+            padding: "10px",
+            margin: "10px 0 0 0",
+            borderRadius: "5px",
+            cursor: "pointer",
+            backgroundColor: "#00ff62ff",
+            color: "black",
+            border: "none",
+        },
         message: {
             marginTop: "10px",
             color: "red",
@@ -42,6 +51,8 @@ function LoginPage() {
     const [password, setPassword] = useState("");
     const [message, setMessage] = useState("");
     const baseURL = process.env.REACT_APP_API_URL;
+
+    const AddUser = () => navigate("/register");
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -100,8 +111,10 @@ function LoginPage() {
                 <button type="submit" style={styles.button}>
                     Login
                 </button>
+                <button type="submit" style={styles.button2} onClick={AddUser}>
+                    AddUser
+                </button>
             </form>
-
             <p style={styles.message}>{message}</p>
         </div>
     );
